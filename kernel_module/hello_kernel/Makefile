@@ -16,7 +16,7 @@ $(MOD).ko: $(MOD).c
 run: $(MOD).ko
 	sudo dmesg -C   # clear old kernel messages
 	sudo insmod $(MOD).ko
-	sudo rmmod $(MOD).ko
+	sudo rmmod $(MOD)
 	sudo dmesg 
 
 clean:
