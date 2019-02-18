@@ -1,7 +1,6 @@
-This directory is accessible via:
-    http://tinyurl.com/cs321-dsl
+These are 16-bit x86 BIOS boot blocks, designed to live as the
+MBR of a disk.
 
-These are plain text files for use inside DSL.
-(This is not a google doc, and it's not HTTPS,
-so the ancient browser in DSL should be able read this.)
+To run:
+	./run.sh taskswitch.asm
 

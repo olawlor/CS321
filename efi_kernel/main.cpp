@@ -1,13 +1,5 @@
 /*
-EFI boot image for x86_64.
-
-See also:
-   gnu libefi headers
-   https://www.intel.com/content/dam/doc/product-specification/efi-v1-10-specification.pdf
-   https://wiki.osdev.org/UEFI
-   https://wiki.osdev.org/UEFI_ISO_Bare_Bones
-   https://www.rodsbooks.com/efi-programming/hello.html
-   https://packages.ubuntu.com/bionic/amd64/gnu-efi/filelist
+EFI boot image for x86_64, written in C++.
 */
 extern "C" {
   #include <efi.h>

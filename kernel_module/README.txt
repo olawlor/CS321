@@ -1,4 +1,11 @@
-Linux kernel module example programs.
+These are linux kernel module example programs.
+
+
+To run:
+	make run
+
+Setup:
+	sudo apt-get install build-essentials linux-headers-`uname -r`
 
 
 References:
