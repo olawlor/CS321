@@ -14,9 +14,10 @@ $(MOD).ko: $(MOD).c
 	$(MAKE) modules
 
 run: $(MOD).ko
+	sudo dmesg -C   # clear old kernel messages
 	sudo insmod $(MOD).ko
 	sudo rmmod $(MOD).ko
-	sudo dmesg | tail -10
+	sudo dmesg 
 
 clean:
 	$(MAKE) clean
