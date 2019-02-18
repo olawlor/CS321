@@ -8,18 +8,19 @@
 #include <linux/proc_fs.h>
 #include <linux/uaccess.h>
 
-
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("lawlor@alaska.edu");
 MODULE_DESCRIPTION("A simple /proc Linux module.");
 MODULE_VERSION("0.0");
 
+// This gets called when somebody opens /proc/foo
 static int my_proc_open(struct inode *inode, struct file *file)
 {
   printk(KERN_INFO "Got open call\n");
   return 0; // <- no error from opening the file
 }
 
+// This gets called when somebody reads /proc/foo
 static ssize_t my_proc_read(struct file *filp, 
     char __user *buffer,size_t len, 
     loff_t *offset)
@@ -43,6 +44,7 @@ static ssize_t my_proc_read(struct file *filp,
   }
 }
 
+// This gets called when somebody closes /proc/foo
 static int my_proc_release(struct inode *inode, struct file *file)
 {
   printk(KERN_INFO "Got close call\n");
@@ -58,13 +60,13 @@ static const struct file_operations my_proc_fops = {
 };
 
 static int __init my_init(void) {
-  printk(KERN_INFO "Hello, kernel mode!\n");
+  printk(KERN_INFO "Setting up /proc/foo\n");
   proc_create("foo",0666,NULL,&my_proc_fops);
   return 0; // 0 means "no error".
 }
 static void __exit my_exit(void) {
   remove_proc_entry("foo",NULL);
-  printk(KERN_INFO "Goodbye, kernel mode...\n");
+  printk(KERN_INFO "Removing /proc/foo\n");
 }
 
 module_init(my_init);
