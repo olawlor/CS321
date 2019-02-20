@@ -2,6 +2,7 @@
   Example Linux kernel module, registers a filesystem
   
   https://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html
+  https://lwn.net/Articles/13325/
   https://elixir.bootlin.com/linux/latest/source/include/linux/fs.h#L2162
   https://elixir.bootlin.com/linux/latest/source/security/inode.c#L26
 */
@@ -15,16 +16,30 @@ MODULE_AUTHOR("lawlor@alaska.edu");
 MODULE_DESCRIPTION("A simple filesystem of type 'my'.");
 MODULE_VERSION("0.0");
 
-// The kernel calls this to fill a "super_block"
+#define MY_MAGIC 0xBEEF /* used to recognize superblocks */
+
+
+
+
+// These are the operations on our superblock
+static struct super_operations my_super_ops = {
+	.statfs		= simple_statfs,
+	.drop_inode	= generic_delete_inode,
+};
+
+
+// The kernel calls this to fill a "super_block" (filesystem info)
 static int my_fill_super(struct super_block *sb, void *data, int silent)
 {
 	static const struct tree_descr files[] = {{""}};
 	int error;
 
   printk(KERN_INFO "Myfs fill_super called\n");
-	error = simple_fill_super(sb, 0xBEEF, files);
+	error = simple_fill_super(sb, MY_MAGIC, files);
 	if (error)
 		return error;
+	
+	sb->s_op=&my_super_ops;
 
 	return 0;
 }
