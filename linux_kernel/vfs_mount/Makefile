@@ -18,8 +18,8 @@ run: $(MOD).ko
 	sudo insmod $(MOD).ko
 	mkdir -p tmp
 	touch tmp.file
-	mount -t "my" -o loop tmp.file tmp
-	umount tmp
+	sudo mount -t "my" -o loop tmp.file tmp
+	sudo umount tmp
 	sudo rmmod $(MOD)
 	sudo dmesg 
 

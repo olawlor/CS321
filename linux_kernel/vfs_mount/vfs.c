@@ -55,7 +55,7 @@ static struct file_system_type my_fs_type = {
 static int __init my_init(void) {
   printk(KERN_INFO "Registering my filesystem with VFS\n");
   register_filesystem(&my_fs_type);
-  return 0; // 0 means "no error".
+  return 0; 
 }
 static void __exit my_exit(void) {
   printk(KERN_INFO "Leaving\n");
