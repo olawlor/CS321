@@ -19,6 +19,7 @@ run: $(MOD).ko
 	mkdir -p tmp
 	touch tmp.file
 	sudo mount -t "my" -o loop tmp.file tmp
+	cat tmp/eggsample
 	sudo umount tmp
 	sudo rmmod $(MOD)
 	sudo dmesg 

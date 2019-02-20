@@ -47,7 +47,7 @@ static int my_fill_super(struct super_block *sb, void *data, int silent)
   // You fill the superblock with the initial files in the root directory:
   static const struct tree_descr files[] = {
     // [0] and [1] are . and ..
-    [2] = {"eggsample", &my_file_operations, S_IWUSR}
+    [2] = {"eggsample", &my_file_operations, 0666}
   };
   int error;
 
