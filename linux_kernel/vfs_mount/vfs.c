@@ -18,35 +18,35 @@ MODULE_VERSION("0.0");
 
 #define MY_MAGIC 0xBEEF /* used to recognize superblocks */
 
+// This is called when somebody reads our example file.
 static ssize_t
 my_file_read(struct file *file, char __user *buf, size_t nbytes, loff_t *ppos)
 {
+  printk(KERN_INFO "Myfs sample file read called at offset %d\n",(int) *ppos);
   char *data = "\n\nEgg-xcelent!\n\n";
   if (*ppos!=0) return 0;
   return simple_read_from_buffer(buf,nbytes,ppos, data,strlen(data));
 }
 
-
-// These are the operations on our (one!) file
+// These are the operations on our (one!) example file
 static const struct file_operations my_file_operations = {
   .owner = THIS_MODULE,
   .read = my_file_read
 };
 
-
 // These are the operations on our superblock
-static struct super_operations my_super_ops = {
+static const struct super_operations my_super_ops = {
   .statfs    = simple_statfs,
   .drop_inode  = generic_delete_inode,
 };
 
-
-// The kernel calls this to fill a "super_block" (filesystem info)
+// The kernel calls this to fill a "super_block" 
+//  (filesystem info) to link us into the VFS layer.
 static int my_fill_super(struct super_block *sb, void *data, int silent)
 {
   // You fill the superblock with the initial files in the root directory:
   static const struct tree_descr files[] = {
-    // [0] and [1] are . and ..
+    // [0] and [1] are reserved for . and ..
     [2] = {"eggsample", &my_file_operations, 0666}
   };
   int error;
@@ -77,6 +77,7 @@ static void my_unmount(struct super_block *b)
   printk(KERN_INFO "Myfs umount called\n");
 }
 
+// This struct defines the mount/unmount operations for our filesystem
 static struct file_system_type my_fs_type = {
   .owner = THIS_MODULE,
   .name="my",
@@ -90,7 +91,7 @@ static int __init my_init(void) {
   return 0; 
 }
 static void __exit my_exit(void) {
-  printk(KERN_INFO "Leaving\n");
+  printk(KERN_INFO "Leaving module\n");
   unregister_filesystem(&my_fs_type);
 }
 
