@@ -22,9 +22,8 @@ MODULE_VERSION("0.0");
 static ssize_t
 my_file_read(struct file *file, char __user *buf, size_t nbytes, loff_t *ppos)
 {
-  printk(KERN_INFO "Myfs sample file read called at offset %d\n",(int) *ppos);
   char *data = "\n\nEgg-xcelent!\n\n";
-  if (*ppos!=0) return 0;
+  printk(KERN_INFO "Myfs sample file read called at offset %d\n",(int) *ppos);
   return simple_read_from_buffer(buf,nbytes,ppos, data,strlen(data));
 }
 
