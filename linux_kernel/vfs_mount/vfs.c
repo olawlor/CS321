@@ -74,6 +74,7 @@ static int __init my_init(void) {
 }
 static void __exit my_exit(void) {
   printk(KERN_INFO "Leaving\n");
+  unregister_filesystem(&my_fs_type);
 }
 
 module_init(my_init);
