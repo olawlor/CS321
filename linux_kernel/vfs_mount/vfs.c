@@ -18,36 +18,53 @@ MODULE_VERSION("0.0");
 
 #define MY_MAGIC 0xBEEF /* used to recognize superblocks */
 
+static ssize_t
+my_file_read(struct file *file, char __user *buf, size_t nbytes, loff_t *ppos)
+{
+  char *data = "\n\nEgg-xcelent!\n\n";
+  if (*ppos!=0) return 0;
+  return simple_read_from_buffer(buf,nbytes,ppos, data,strlen(data));
+}
 
+
+// These are the operations on our (one!) file
+static const struct file_operations my_file_operations = {
+  .owner = THIS_MODULE,
+  .read = my_file_read
+};
 
 
 // These are the operations on our superblock
 static struct super_operations my_super_ops = {
-	.statfs		= simple_statfs,
-	.drop_inode	= generic_delete_inode,
+  .statfs    = simple_statfs,
+  .drop_inode  = generic_delete_inode,
 };
 
 
 // The kernel calls this to fill a "super_block" (filesystem info)
 static int my_fill_super(struct super_block *sb, void *data, int silent)
 {
-	static const struct tree_descr files[] = {{""}};
-	int error;
+  // You fill the superblock with the initial files in the root directory:
+  static const struct tree_descr files[] = {
+    // [0] and [1] are . and ..
+    [2] = {"eggsample", &my_file_operations, S_IWUSR}
+  };
+  int error;
 
   printk(KERN_INFO "Myfs fill_super called\n");
-	error = simple_fill_super(sb, MY_MAGIC, files);
-	if (error)
-		return error;
-	
-	sb->s_op=&my_super_ops;
+  error = simple_fill_super(sb, MY_MAGIC, files);
+  if (error)
+    return error;
+  
+  sb->s_op=&my_super_ops;
 
-	return 0;
+  return 0;
 }
 
 // The kernel calls this to mount a filesystem of this type:
 static struct dentry *my_mount(struct file_system_type *fs_type,
-		  int flags, const char *dev_name,
-		  void *data)
+      int flags, const char *dev_name,
+      void *data)
 {
   printk(KERN_INFO "Myfs mount called: '%s'\n",dev_name);
   return mount_single(fs_type,flags,data,my_fill_super);
