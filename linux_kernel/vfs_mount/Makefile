@@ -17,8 +17,7 @@ run: $(MOD).ko
 	sudo dmesg -C   # clear old kernel messages
 	sudo insmod $(MOD).ko
 	mkdir -p tmp
-	touch tmp.file
-	sudo mount -t "my" -o loop tmp.file tmp
+	sudo mount -t "my"  "lulz?"  tmp
 	cat tmp/eggsample
 	sudo umount tmp
 	sudo rmmod $(MOD)
