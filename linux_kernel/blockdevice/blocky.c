@@ -48,8 +48,13 @@ int my_transfer(struct my_blockydev *dev, struct page *page,
     unsigned int nbytes, unsigned int mem_off, unsigned int op,
 		sector_t disk_sector)
 {
+  void *mem;
 	u8 *data = dev->data + (disk_sector<<SECTOR_SHIFT);
-	void *mem = kmap_atomic(page);
+	
+  printk(KERN_INFO "Blocky transfer: %d bytes at offset %d, sector %ld\n",
+     nbytes, mem_off, disk_sector);
+	
+	mem = kmap_atomic(page);
   
   if (op_is_write(op))
     memcpy(data, mem+mem_off, nbytes);
@@ -107,6 +112,7 @@ static int __init my_init(void) {
   // Allocate storage space
   dev->size=1024*1024*64; // 64MB should be enough for anyone
   dev->data=vmalloc(dev->size);
+  // memset(dev->data,0,dev->size); // zero unused disk space (avoid kernel memory leak)
   if (dev->data==0) return -ENOMEM;
   
   // We need a block device major number:
