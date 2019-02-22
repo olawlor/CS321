@@ -33,10 +33,15 @@ MODULE_VERSION("0.0");
 
 // Define a custom global struct to hold our info:
 struct my_blockydev {
+  // Size of disk in bytes
   unsigned long size;
-  spinlock_t lock;
+
+  // Data stored on disk
   u8 *data;
+  
+  // Gendisk
   struct gendisk *gd;
+
   int major;
 };
 static struct my_blockydev *global_dev;
@@ -98,16 +103,14 @@ io_error:
 
 static struct block_device_operations my_blocky_ops = {
     .owner           = THIS_MODULE,
-    //.ioctl	     = sbd_ioctl
+    //.ioctl	     = my_ioctl
 };
 
 static int __init my_init(void) {
 
   // Allocate our struct
-  struct my_blockydev *dev=kmalloc(sizeof(struct my_blockydev), 0);
+  struct my_blockydev *dev=kzalloc(sizeof(struct my_blockydev), GFP_KERNEL);
   if (dev==0) return -ENOMEM;
-  memset(dev,0,sizeof(*dev)); // zero unused fields
-  spin_lock_init(&dev->lock);
 
   // Allocate storage space
   dev->size=1024*1024*64; // 64MB should be enough for anyone
@@ -131,6 +134,7 @@ static int __init my_init(void) {
   strncpy(dev->gd->disk_name,"blocky0",sizeof(dev->gd->disk_name));
   set_capacity(dev->gd,dev->size/(1L<<SECTOR_SHIFT));
   
+  // We need an I/O queue
   dev->gd->queue=blk_alloc_queue(GFP_KERNEL);
   if (dev->gd->queue==0) return -ENOMEM;
   
