@@ -1,5 +1,5 @@
 # This is the name of our module
-MOD = block
+MOD = blocky
 
 # This points to your kernel's makefile:
 MAKE = make -C /lib/modules/$(shell uname -r)/build M=$(PWD) 
