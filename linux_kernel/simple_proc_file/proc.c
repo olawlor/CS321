@@ -29,14 +29,16 @@ static const struct file_operations my_proc_fops = {
     .owner      = THIS_MODULE,
     .read       = my_proc_read,
 };
+struct proc_dir_entry *pe;
 
 static int __init my_init(void) {
   printk(KERN_INFO "Setting up /proc/foo\n");
-  proc_create("foo",0666,NULL,&my_proc_fops);
+  pe=proc_create("foo",0666,NULL,&my_proc_fops);
   return 0; // 0 means "no error".
 }
 static void __exit my_exit(void) {
   printk(KERN_INFO "Removing /proc/foo\n");
+  proc_remove(pe);
 }
 
 module_init(my_init);

@@ -30,12 +30,14 @@ static ssize_t my_proc_read(struct file *filp,
  
   printk(KERN_INFO "Got read call with user buffer %p:%zu bytes at offset %d\n",
     buffer,len, (int)(*offset));
+  // Everything below is definitely simpler as:
+  //   return simple_read_from_buffer(buffer,len,offset, my_str,count);
   
-  if (count>len) count=len; // shrink to the user's size
-  if (*offset !=0) count=0; // only read our stuff from the beginning
+  if (*offset >= count) return 0; // no more data to give
+  if (count>len-*offset) count=len-*offset; // shrink to the user's size
   
   // Move data out of kernel memory into user's buffer
-  if (0!=copy_to_user(buffer, my_str, count))
+  if (0!=copy_to_user(buffer, my_str + *offset, count))
     return -EFAULT; // something bad about that
   else 
   {
@@ -58,15 +60,16 @@ static const struct file_operations my_proc_fops = {
     .read       = my_proc_read,
     .release    = my_proc_release,
 };
+struct proc_dir_entry *pe;
 
 static int __init my_init(void) {
   printk(KERN_INFO "Setting up /proc/foo\n");
-  proc_create("foo",0666,NULL,&my_proc_fops);
+  pe=proc_create("foo",0666,NULL,&my_proc_fops);
   return 0; // 0 means "no error".
 }
 static void __exit my_exit(void) {
-  remove_proc_entry("foo",NULL);
   printk(KERN_INFO "Removing /proc/foo\n");
+  proc_remove(pe);
 }
 
 module_init(my_init);
