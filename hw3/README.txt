@@ -43,9 +43,9 @@ which you can tell because it has a different inode than the decoys.
 After finding your way though two levels of decoys you should find the README.txt.
 
 
-Upload your hw3.0.txt log file to Blackboard.
+Upload your hw3.0.txt log file to Blackboard:
 
-
+https://classes.alaska.edu/webapps/assignment/uploadAssignment?content_id=_6493852_1&course_id=_170465_1&group_id=&mode=cpview
 
 
 
