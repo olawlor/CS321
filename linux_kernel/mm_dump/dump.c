@@ -1,5 +1,5 @@
 /*
-  Example Linux kernel module, does nothing but start and stop.
+  Example Linux kernel module, dumps the page table entries.
 */
 #include <linux/init.h>
 #include <linux/module.h>
