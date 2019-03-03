@@ -1,6 +1,7 @@
 Problem 0 is all about working with disk images and filesystems on Linux.
 All these commands will work fine from inside the "nsl" virtual machine.
 
+
 0.A: Set up screen recording with:
   script -af hw3.0.txt
 
@@ -47,6 +48,12 @@ Upload your hw3.0.txt log file to Blackboard:
 
 https://classes.alaska.edu/webapps/assignment/uploadAssignment?content_id=_6493852_1&course_id=_170465_1&group_id=&mode=cpview
 
+
+If you mess up the disk image, you can get a clean copy by:
+  - Reboot (to make sure the drive is unmounted and the loopback device is clear)
+  - Get a clean copy of the disk from git:
+	   rm tinydisk.hdd
+	   git checkout -- tinydisk.hdd
 
 
 
