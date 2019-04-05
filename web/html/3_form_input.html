@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Form Input</h1>
+
+<form method="post" action="javascript:formSubmit()" enctype="multipart/form-data">
+<p><input type="text" value="yoname" id="username" />  Name
+<p><input type="password" value="yomama" id="userpass" />  Password
+<p><input type="submit" value="Click Me!" />
+</form>
+
+<p id="status">Status area here</p>
+
+<script>
+function formSubmit() {
+  var output=document.getElementById("status");
+  var username=document.getElementById("username").value;
+  var userpass=document.getElementById("userpass").value;
+  output.innerHTML+="<br>New user: '"+username+"'";
+  console.log("Grabbed password '"+userpass+"'");
+}
+</script>
+
+</body>
+</html>
+
+

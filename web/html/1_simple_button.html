@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Script Buttons</h1>
+
+<p id="status">Original Text</p>
+<input type="button" value="Click Me!" onclick="javascript:goClick()" />
+
+<script>
+var countdown=5;
+function goClick() {
+  var output=document.getElementById("status");
+  output.innerHTML+="<br>New scripted text.  In "+countdown+"...";
+  
+  if (countdown-- <= 0) {
+    output.style.backgroundColor="purple";
+  }
+}
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>The Modern Web</h1>
+
+<p id="status">Error assessing customer loyalty.</p>
+
+<script>
+var color="white";
+var track=window.confirm("This page uses cookies, OK?");
+if (track) {
+  color="yellow";
+  var spam=window.confirm("Can we send you email?");
+  if (spam) {
+    color="orange";
+    var money=window.confirm("Will you donate to our Payola Account?");
+    if (money) {
+      color="green";
+      var truefriend=window.confirm("If we needed to move a body, would you help us out?");
+      if (truefriend) {
+         color="red";
+         alert("WOA, sweet!");
+         var output=document.getElementById("status");
+         output.innerHTML="TRUE CUSTOMER DETECTED!<br>Error loading content.";
+      }
+    }
+  }
+}
+document.body.style.backgroundColor=color;
+</script>
+</body>
+</html>
+
+

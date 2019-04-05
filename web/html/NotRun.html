@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<title>NotRun: Live JavaScript Editor</title>
+</head>
+<body>
+
+<script type="text/javascript">
+function runCode() {
+	var code=document.getElementById("code").value;
+	var output=document.getElementById("output");
+	
+	try {
+		var ret=new Function(code) ();
+		var str="Program Complete.";
+		if (ret!==undefined) str+="  Return value "+JSON.stringify(ret);
+		output.innerHTML=str;
+	} catch (exception) {
+	  console.log("Threw exception "+exception);
+		output.innerHTML="Runtime exception: "+JSON.stringify(exception);
+	}
+}
+</script>
+
+<h1>NotRun: Live JavaScript Editing</h1>
+<form method="post" action="javascript:runCode()" enctype="multipart/form-data">
+<table border="1"><tbody>
+<tr>
+ <td width="50%" valign="top">
+JavaScript code:<br>
+<textarea id="code" name="code" rows="20" cols="50"">
+var color="white";
+var track=window.confirm("This page uses cookies, OK?");
+if (track) {
+  color="yellow";
+  var spam=window.confirm("Can we send you email?");
+  if (spam) {
+    color="orange";
+    var money=window.confirm("Will you donate to our Payola Account?");
+    if (money) {
+      color="green";
+      var truefriend=window.confirm("If we needed to move a body, would you help us out?");
+      if (truefriend) {
+         color="red";
+         alert("WOA, sweet!");
+      }
+    }
+  }
+}
+document.body.style.backgroundColor=color;
+</textarea><br>
+   
+   <input type="submit" name="Run It!" value="Run It!" title="[alt-shift-r]" accesskey="r">
+
+ </td>
+ <td width="50%" valign="top">
+Output:<br>
+   <div id="output">
+ </td>
+</tr>
+</table>
+</form>
+Directions: hit "Run It!" to see what this JavaScript code does.  Now edit the code.  Repeat.<br><br>
+To save your JavaScript code, copy it into Notepad, and save with the ".js" filename extension.
+See also: simple <a href="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_headers">w3schools examples</a>, more advanced javascript <a href="https://jsfiddle.net/macloo/cebosb15/">JSFiddle</a>.<br>
+<i>NotRun was written by Dr. Orion Lawlor 2019-04-04.  It's public domain.</i>
+</body></html>
+

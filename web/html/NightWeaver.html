@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<title>NightWeaver: Live HTML Editor</title>
+</head>
+<body>
+
+<script type="text/javascript">
+function runCode() {
+	var code=document.getElementById("code").value;
+	var output=document.getElementById("output");
+	
+	try {
+		output.innerHTML=code;
+	} catch (exception) {
+		output.innerHTML="Parse error!";
+	}
+}
+</script>
+
+<h1>NightWeaver: Live HTML Editing</h1>
+<form method="post" action="javascript:runCode()" enctype="multipart/form-data">
+<table border="1"><tbody>
+<tr>
+ <td width="50%" valign="top">
+HTML code:<br>
+<textarea id="code" name="code" rows="20" cols="50"">
+<html><head></head><body>
+
+<h1>This is HTML!</h1>
+
+<p>Try <i>editing</i> this text, and hit the "Run It!" button to see what happens!
+
+<p>Example link <a href="http://en.wikipedia.org/wiki/HTML">to Wikipedia</a>.
+
+<p>Example button 
+<button onclick='javascript:alert("Yo!");'>Hi!</button>
+
+<p>Example image 
+<img src="http://bit.ly/PX3RwP" />
+
+</body></html>
+</textarea><br>
+   
+   <input type="submit" name="Run It!" value="Run It!" title="[alt-shift-r]" accesskey="r">
+
+ </td>
+ <td width="50%" valign="top">
+Output:<br>
+   <div id="output">
+ </td>
+</tr>
+</table>
+</form>
+Directions: hit "Run It!" to see what this HTML code does.  Now edit the code.  Repeat.<br><br>
+To save your HTML code, copy it into Notepad, and save with the ".html" filename extension.
+See also: simple <a href="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_headers">w3schools examples</a>, more advanced javascript <a href="https://jsfiddle.net/macloo/cebosb15/">JSFiddle</a>.<br>
+<i>NightWeaver was written in 45 minutes by Dr. Orion Lawlor 2014-04-07.  It has nothing to do with DreamWeaver.  It's public domain.</i>
+</body></html>
+
