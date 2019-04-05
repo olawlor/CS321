@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Script Buttons</h1>
+
+<input type="text" id="myin"   value="foo"/>
+<input type="button" value="Click Me!" onclick="javascript:appendToList()" />
+
+<ul id="status">
+</ul>
+
+
+<script>
+function appendToList() {
+  var input=document.getElementById("myin");
+  var output=document.getElementById("status");
+  var text = input.value;
+  
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function() { // called when data comes back from server
+    console.log(xhr.response);
+    output.innerHTML=xhr.response;
+  };
+  xhr.open("GET","/dyn/"+encodeURIComponent(input.value));
+  xhr.send();
+}
+window.setInterval(appendToList,3000);
+</script>
+
+</body>
+</html>
+
+

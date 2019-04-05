@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Document Object Model</h1>
+
+<input type="text" id="myin"   value="foo"/>
+<input type="button" value="Click Me!" onclick="javascript:appendToList()" />
+
+<ul id="status"> </ul>
+
+<script>
+function appendToList() {
+  var input=document.getElementById("myin");
+  var output=document.getElementById("status");
+  var text = input.value;
+  //output.innerHTML+=text;
+  var newitem=document.createElement("li");
+  newitem.appendChild(document.createTextNode(text));
+  output.appendChild(newitem);
+}
+window.setInterval(appendToList,1000);
+</script>
+
+</body>
+</html>
+
+
